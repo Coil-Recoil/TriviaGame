@@ -6,6 +6,10 @@ h1, .jumbotron {
 
 .jumbotron {
 	background-image: url("../images/skateboard-wheels.jpg");
+	background-repeat: no-repeat;
+   background-size: cover;
+   margin: auto;
+   color: white;   
 }
 
 body {
