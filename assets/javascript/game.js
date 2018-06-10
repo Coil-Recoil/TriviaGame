@@ -12,7 +12,7 @@ $(document).ready(function(){
     var question = ["Which company's motto is 'Skate Or Die' ?",
     "Which one of these did Daewon Song ride for in 2003?", "Who invented the ollie?", "Who was Ed Templeton riding for in 2002?", "Finish this Skate film title: Dog town and _________?",
     "Who invented the Kickflip?", "Which comedian is also a pro skateboarder?", "Which skateboarder was not born in the United States?"];
-    var answer = ["Zero", " Speed Demons", "Alan Gelfand", "Toy Machine", "The Z-Boys", "Rodney Mullen", "Tom Green", "Bucky Lasek", "A Lion", "Daewon Song"];
+    var answer = ["Zero", "Speed Demons", "Alan Gelfand", "Toy Machine", "The Z-Boys", "Rodney Mullen", "Tom Green", "Bucky Lasek"];
     var firstChoice = ["Black Label", "Element", "Alan Gelfand", "Toy Machine", "The P-Boys", "Tony Alva", "Adam Sandler", "Bucky Lasek"];
     var secondChoice = ["Flip", "Speed Demons", "Tony Alva", "Birdhouse", "The Nutty Bunch", "Rodney Mullen", "Geoff Rowley", "Pierre-Luc Gagnon"];
     var thirdChoice = ["Toy Machine", "Birdhouse", "Tony Hawk", "Organic", "The X-Boys", "Steve Caballero ", "Chris Rock", "Andy Macdonald"];
