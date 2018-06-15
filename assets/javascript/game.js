@@ -168,7 +168,7 @@ $(document).ready(function () {
         }
         else if (count === 7) {
             $("#image").show();
-            $("#image").html('<img src="assets/images/tumblr_mb1alw36xa1rydwa5o1_500.gif">');
+            $("#image").html('<img src="assets/images/360flip-steps-giphy.gif">');
         }
     }
 
