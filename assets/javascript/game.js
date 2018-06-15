@@ -1,98 +1,100 @@
-//Variables
-$(document).ready(function(){
+$(document).ready(function () {
+
+    //Variables
+
     var count = 0;
     var time = 31;
-    var isSelected = false;
     var ticker;
     var correct = 0;
     var incorrect = 0;
     var unanswered = 0;
+    var selected = false;
 
-//Arrays
-    var question = ["Which company's motto is 'Skate Or Die' ?",
-    "Which one of these did Daewon Song ride for in 2003?", "Who invented the ollie?", "Who was Ed Templeton riding for in 2002?", "Finish this Skate film title: Dog town and _________?",
-    "Who invented the Kickflip?", "Which comedian is also a pro skateboarder?", "Which skateboarder was not born in the United States?"];
+    //Content Arrays
+
+    var question = ["Which company's motto is 'Skate Or Die' ?", "Which one of these did Daewon Song ride for in 2003?", "Who invented the ollie?", "Who was Ed Templeton riding for in 2002?", "Finish this Skate film title: Dog town and _________?", "Who invented the Kickflip?", "Which comedian is also a pro skateboarder?", "Which skateboarder was not born in the United States?"];
     var answer = ["Zero", "Speed Demons", "Alan Gelfand", "Toy Machine", "The Z-Boys", "Rodney Mullen", "Tom Green", "Bucky Lasek"];
     var firstChoice = ["Black Label", "Element", "Alan Gelfand", "Toy Machine", "The P-Boys", "Tony Alva", "Adam Sandler", "Bucky Lasek"];
     var secondChoice = ["Flip", "Speed Demons", "Tony Alva", "Birdhouse", "The Nutty Bunch", "Rodney Mullen", "Geoff Rowley", "Pierre-Luc Gagnon"];
     var thirdChoice = ["Toy Machine", "Birdhouse", "Tony Hawk", "Organic", "The X-Boys", "Steve Caballero ", "Chris Rock", "Andy Macdonald"];
     var fourthChoice = ["Zero", "Blind", "Rodney Mullen", "World industries", "The Z-Boys", "Alan Gelfand", "Tom Green", "Rodney Mullen"];
 
+    //Content Functions
 
-
-    function showHolders() {
-        $("#question-holder").show();
-        $("#choice-holder-1").show();
-        $("#choice-holder-2").show();
-        $("#choice-holder-3").show();
-        $("#choice-holder-4").show();
+    function choiceShow() {
+        $("#question").show();
+        $("#choice-1").show();
+        $("#choice-2").show();
+        $("#choice-3").show();
+        $("#choice-4").show();
     }
-    function hideHolders() {
-        $("#question-holder").hide();
-        $("#choice-holder-1").hide();
-        $("#choice-holder-2").hide();
-        $("#choice-holder-3").hide();
-        $("#choice-holder-4").hide();
+    function choiceHide() {
+        $("#question").hide();
+        $("#choice-1").hide();
+        $("#choice-2").hide();
+        $("#choice-3").hide();
+        $("#choice-4").hide();
     }
     function hideResults() {
-        $("#correct-holder").hide();
-        $("#incorrect-holder").hide();
-        $("#unanswered-holder").hide();
-        $("#restart-holder").hide();
+        $("#correct").hide();
+        $("#incorrect").hide();
+        $("#unanswered").hide();
+        $("#restart").hide();
     }
-    function displayQuestion () {
+    function showQuestion() {
         hideResults();
-        $("#answer-holder").hide();
-        $("#image-holder").hide();
-        $("#time-holder").show();
-        showHolders();
-        $("#question-holder").html(question[count]);
-        $("#choice-holder-1").html(firstChoice[count]);
-        $("#choice-holder-2").html(secondChoice[count]);
-        $("#choice-holder-3").html(thirdChoice[count]);
-        $("#choice-holder-4").html(fourthChoice[count]);
-    
-    }
-    $("#choice-holder-1").on("click", checkAnswer) 
-    $("#choice-holder-2").on("click", checkAnswer)
-    $("#choice-holder-3").on("click", checkAnswer)
-    $("#choice-holder-4").on("click", checkAnswer)
+        $("#answer").hide();
+        $("#image").hide();
+        $("#time").show();
+        choiceShow();
+        $("#question").html(question[count]);
+        $("#choice-1").html(firstChoice[count]);
+        $("#choice-2").html(secondChoice[count]);
+        $("#choice-3").html(thirdChoice[count]);
+        $("#choice-4").html(fourthChoice[count]);
 
-// Answer/Rules
+    }
+    $("#choice-1").on("click", checkAnswer)
+    $("#choice-2").on("click", checkAnswer)
+    $("#choice-3").on("click", checkAnswer)
+    $("#choice-4").on("click", checkAnswer)
+
+    // Answer/Rules
+
     function checkAnswer() {
 
-        hideHolders();
+        choiceHide();
 
-        if($(this).text() === answer[count]) {
+        if ($(this).text() === answer[count]) {
             stopTime();
-            isSelected = true;
-            $("#answer-holder").show();
-            $("#answer-holder").html("Right! The answer is: " + answer[count]);
-            displayImage();
+            selected = true;
+            $("#answer").show();
+            $("#answer").html("Yup! The answer is " + answer[count]);
+            showGif();
             correct++;
             count++;
         }
         else {
             stopTime();
-            isSelected = true;
-            $("#answer-holder").show();
-            $("#answer-holder").html("Wrong! The answer is: " + answer[count]);
-            displayImage();
+            selected = true;
+            $("#answer").show();
+            $("#answer").html("Nah... The answer is " + answer[count]);
+            showGif();
             incorrect++;
             count++;
-        } 
+        }
 
-        checkGameEnd();  
+        gameEnd();
     }
 
 
-    function checkGameEnd() {
-        if(count === question.length) {
-            $("#time-holder").hide();
+    function gameEnd() {
+        if (count === question.length) {
+            $("#time").hide();
             showResults();
             count = 0;
             $(".start").show();
-            $(".start").on("click", function() {
+            $(".start").on("click", function () {
                 resetResults();
                 startGame();
             });
@@ -105,18 +107,18 @@ $(document).ready(function(){
 
     function displayTime() {
         time--;
-        $("#time-holder").html("Time remaining: " + time);
-      
-            if(time <= 0) {
-                hideHolders();
-                stopTime();
-                $("#answer-holder").show();
-                $("#answer-holder").html("Time is up! The answer is: " + answer[count]);
-                displayImage();
-                unanswered++;
-                count++;
-                checkGameEnd();
-            }
+        $("#time").html("Time remaining: " + time);
+
+        if (time <= 0) {
+            choiceHide();
+            stopTime();
+            $("#answer").show();
+            $("#answer").html("Time's up! The answer is " + answer[count]);
+            showGif();
+            unanswered++;
+            count++;
+            gameEnd();
+        }
     }
 
     function startTime() {
@@ -126,78 +128,81 @@ $(document).ready(function(){
     function stopTime() {
         clearInterval(ticker);
         resetTime();
-        if(count < question.length - 1) {
+        if (count < question.length - 1) {
             setTimeout(startTime, 2000);
-            setTimeout(displayQuestion, 3000);
+            setTimeout(showQuestion, 3000);
         }
     }
 
     resetTime();
 
 
-    function displayImage() {
-        if(count === 0) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+    function showGif() {
+        if (count === 0) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/car-giphy.gif">');
         }
-        else if(count === 1) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 1) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/backsidebs-giphy.gif">');
         }
-        else if(count === 2) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 2) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/84ef9aa01e11fa82865c96303bb69cb8.gif">');
         }
-        else if(count === 3) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 3) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/97198ed4d8e1931b074fdc6c2a8eee84.gif">');
         }
-        else if(count === 4) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 4) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/tumblr_mb1alw36xa1rydwa5o1_500.gif">');
         }
-        else if(count === 5) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 5) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/giphy.gif">');
         }
-        else if(count === 6) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 6) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/4tH8.gif">');
         }
-        else if(count === 7) {
-            $("#image-holder").show();
-            $("#image-holder").html();
+        else if (count === 7) {
+            $("#image").show();
+            $("#image").html('<img src="assets/images/tumblr_mb1alw36xa1rydwa5o1_500.gif">');
         }
     }
 
- //Results
+    //Results
+
     function showResults() {
-        $("#correct-holder").show();
-        $("#correct-holder").html("Correct: " + correct);
-        $("#incorrect-holder").show();
-        $("#incorrect-holder").html("Incorrect: " + incorrect);
-        $("#unanswered-holder").show();
-        $("#unanswered-holder").html("Unanswered: " + unanswered);
-        $("#restart-holder").show();
-        $("#restart-holder").html("Press Start to Try Again!");
+        $("#correct").show();
+        $("#correct").html("Correct: " + correct);
+        $("#incorrect").show();
+        $("#incorrect").html("Incorrect: " + incorrect);
+        $("#unanswered").show();
+        $("#unanswered").html("Unanswered: " + unanswered);
+        $("#restart").show();
+        $("#restart").html("Press Start to Try Again!");
     }
 
-// Reset
+    // Reset
+
     function resetResults() {
         correct = 0;
         incorrect = 0;
         unanswered = 0;
     }
 
-// Start Game
+    // Start Game
+
     function startGame() {
         $(".start").hide();
         startTime();
-        displayQuestion();
+        showQuestion();
     }
 
 
-  $(".start").on("click", function() {
-    startGame();
-  });
+    $(".start").on("click", function () {
+        startGame();
+    });
 });
